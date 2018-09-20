@@ -18,7 +18,7 @@
 #>
 
 $curDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
-$configuration = Get-Content ($curDir + "\configuration.json") | ConvertFrom-Json;
+$configuration = Get-Content -Raw ($curDir + "\configuration.json") | ConvertFrom-Json;
 
 # Check all critical VMs are accounted for
 #
@@ -28,7 +28,7 @@ for ($i = 0; $i -lt $configuration.CriticalVMs.Length; $i++)
 
     try
     {
-        $vm = Get-VM -Name $vmName;
+        $vm = Get-VM -Name $vmName -ErrorAction Stop;
 
         if ($vm.State -ne "Running")
         {
