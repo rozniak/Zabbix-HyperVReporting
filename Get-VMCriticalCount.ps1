@@ -22,10 +22,8 @@ $configuration = Get-Content -Raw ($curDir + "\configuration.json") | ConvertFro
 
 # Check all critical VMs are accounted for
 #
-for ($i = 0; $i -lt $configuration.CriticalVMs.Length; $i++)
+foreach ($vmName in $configuration.CriticalVMs)
 {
-    $vmName = $configuration.CriticalVMs[$i];
-
     try
     {
         $vm = Get-VM -Name $vmName -ErrorAction Stop;
